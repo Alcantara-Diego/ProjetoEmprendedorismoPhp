@@ -290,6 +290,7 @@ if(isset($_SESSION['msg'])){
 
 
     <!-- Barra de navegação ------------------------------------------------------  Barra de navegação    -->
+  
     <nav>
     <div class="navContainer">
         <!-- Mobile Hamburguer -->
@@ -308,13 +309,20 @@ if(isset($_SESSION['msg'])){
 
         <div class="navMenu">
           <ul class="navItems">
+            <li>
+              <div id="produtosListaDropDown">
+                <a> <span>Destaques</span> <i class="fa fa-caret-down"></i> </a>
+                <ul id="produtosListaDropDownUl">
+                  <li id="promocaoBtn">Promoções</li>
+                  <li id="maisVendidosBtn">Mais vendidos</li>
+                </ul>
+              </div>
+            </li>
 
             <li>
                 <a href="../index.php">Home</a>
             </li>
-            <li>
-              <a href="../products/produtos.php">Produtos</a>
-            </li>
+            
             <li>
                 <a href="../contato/contato.php">Contato</a>
             </li>
@@ -330,18 +338,24 @@ if(isset($_SESSION['msg'])){
                                if((!isset($_SESSION['id'])) AND (!isset($_SESSION['nome']))){
                          
                      
-                                echo  '<a href="user/login.php"> <i class="fa fa-user"></i><span class="nav2ItemNome">Login</span></a>';
+                                echo  '<a href="login.php"> <i class="fa fa-user"></i></a></span>';
                               
                               } else {
                                 echo  '<span class="menuItem"><a href="dashboard.php">Configurações</a></span>';
                   
-                                echo    '<a href="sair.php">SAIR</a>';
-                              
-                                           
-                              }
+    
+                          echo  '<a href="../user/login.php"> <i class="fa fa-user"></i></a></span>';
+                        }
+                         else {
+            
+                          echo  '<span class="menuItem"><a href="../user/dashboard.php">Configurações</a></span>';
+            
+                          echo    '<a href="../user/sair.php">SAIR</a>';
+                        
+                      }
             ?>
             </button>
-            <button id="abrirCarrinhoBtn" class="navBtn">
+            <button id="abrirCarrinhoBtn" class="navBtn" onclick="">
               <i class="fa fa-cart-shopping"></i>
               <span class="nav2ItemNome">Carrinho</span>
             </button>
@@ -354,39 +368,55 @@ if(isset($_SESSION['msg'])){
 
 
 
-    <div class="loginArea">
-      <section class="cadastroContainer">
-      <h1>Cadastro</h1>
-      
-      
-      
-      
-      <form method="POST" action="">
-      <label>Nome:</label>
-          <input type="text" name="nome" placeholder="digite o nome completo"id="" value="<?php if(isset($dados['nome']))
-          {echo $dados['nome']; } ?>">
-      
-          <label>CPF:</label>
-          <input type="text" name="cpf" placeholder="digite o e-cpf"id="" value="<?php if(isset($dados['cpf']))
-          {echo $dados['cpf']; } ?>">
-          <label>E-mail:</label>
-          <input type="email" name="usuario" placeholder="digite o e-mail"id="" value="<?php if(isset($dados['usuario']))
-          {echo $dados['usuario']; } ?>">
-      
-          <label >Senha:</label>
-          <input type="password" name="senha_usuario" placeholder="digite a senha"id="" value="<?php if(isset($dados['senha_usuario']))
-          {echo $dados['senha_usuario'];} ?>">
-      
-          <label >Digite novamente a senha:</label>
-          <input type="password" name="senha_usuario_2" placeholder="digite a senha novamente"id="" value="<?php if(isset($dados['senha_usuario']))
-          {echo $dados['senha_usuario'];} ?>">
-      
-          <div class="btnContainer">
-            <input type="submit" value="Cadastrar" name="SendCadastro">
-          </div>
-           
-      </form>
-      </section>
+    <section>
+
+    <h1>Cadastro</h1>
+
+
+
+
+<form method="POST" action="">
+
+    <label>Nome:</label>
+        <input type="text" name="nome" placeholder="digite o nome completo"id="" value="<?php if(isset($dados['nome']))
+        {echo $dados['nome']; } ?>">
+
+        
+        <br>
+        <br>
+        <label>CPF:</label>
+        <input type="text" name="cpf" placeholder="digite o e-cpf"id="" value="<?php if(isset($dados['cpf']))
+        {echo $dados['cpf']; } ?>">
+
+
+        <br>
+        <br>
+        <label>Usuário:</label>
+        <input type="email" name="usuario" placeholder="digite o e-mail"id="" value="<?php if(isset($dados['usuario']))
+        {echo $dados['usuario']; } ?>">
+
+        <br>
+        <br>
+
+        <label >Senha:</label>
+        <input type="password" name="senha_usuario" placeholder="digite a senha"id="" value="<?php if(isset($dados['senha_usuario']))
+        {echo $dados['senha_usuario'];} ?>">
+
+        <br>
+        <br>
+
+        <label >Digite novamente a senha:</label>
+        <input type="password" name="senha_usuario_2" placeholder="digite a senha novamente"id="" value="<?php if(isset($dados['senha_usuario']))
+        {echo $dados['senha_usuario'];} ?>">
+
+        <br>
+        <br>
+
+        <input type="submit" value="Cadastrar" name="SendCadastro"> 
+</form>
+
+
+    </section>
 
       <div class="overlay"></div>
     </div>

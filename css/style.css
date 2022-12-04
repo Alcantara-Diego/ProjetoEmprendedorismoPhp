@@ -525,7 +525,6 @@ header p {
 }
 
 @media screen and (width < 460px) {
-    
     .listaDeProdutos {
         gap: 0;
     }
@@ -764,4 +763,16 @@ header p {
 .menuItem {
     right: 22%;
     position: absolute;
+}
+
+.AdminDiv {
+    position: fixed;
+    width: 20%;
+    height: 10%;
+    background-color: pink;
+}
+
+.AdminDiv button {
+    margin-top: 10%;
+    margin-left: 10%;
 }

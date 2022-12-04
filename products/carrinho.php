@@ -1,31 +1,18 @@
-<?php
-
-
-session_start();
-ob_start();
-
-
-
-
-
-include_once '../php/conexao.php';
-
-
-
-
-?>
-
 <!DOCTYPE html>
-<html lang="pt-br">
-  
-  <head>
+<html lang="en">
+    <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="sobre.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/footer.css">
 
+    <!-- CSS DO PRODUTOS                                                                 CSS DO PRODUTOS -->
 
+    <link rel="stylesheet" href="./carrinho.css" type="text/css"/>
+    <!-- CSS DO PRODUTOS                                                                 CSS DO PRODUTOS -->
 	<link
       href="https://fonts.googleapis.com/css?family=Inter&display=swap"
       rel="stylesheet"
@@ -71,46 +58,37 @@ include_once '../php/conexao.php';
       crossorigin="anonymous"
     />
 
-    
+    <title>Carrinho</title>
 
-    <link
-      href="https://fonts.googleapis.com/css?family=Inter&display=swap"
-      rel="stylesheet"
-    />
 
-    <!-- FONT AWESOME BRAND TAGS -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css"
-      integrity="sha512-bSncow0ApIhONbz+pNI52n0trz5fMWbgteHsonaPk42JbunIeM9ee+zTYAUP1eLPky5wP0XZ7MSLAPxKkwnlzw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-    />
+</head>
+<body>
 
-    <title>Sobre</title>
-    <link
-      rel="shortcut icon"
-      href="../images/kisspng_gray_wolf_logo_mascot_clip_art_wolf_5ab4467dd78141_1.png"
-    />
-  </head>
-
-  <body>
+   
     <header>
-       <!-- Barra de navegação ------------------------------------------------------  Barra de navegação    -->
-       <nav>
-        
-      <div class="navContainer">
+        <p class="primeiroTitulo ">Ganhe 10% + FRETE GRÁTIS na primeira compra com o cupom: BEMVINDO</p>
+        <p class="segundoTitulo">
+            Frete Grátis, vide as regras | 1ª Troca sem custo* | Entrega realizada em até 7 dias úteis</p>
+            <?php 
+            if (isset($_SESSION['id'])) {
+
+
+              echo    '<p class="primeiroTitulo ">Bem Vindo ' . $_SESSION['nome'] . '</p>';
+            }
+            ?>
+    </header>
+
+
+ <!-- Barra de navegação ------------------------------------------------------  Barra de navegação    -->
+ <nav>
+    <div class="navContainer">
         <!-- Mobile Hamburguer -->
         <button id="hamburguerBtn" class="navBtn">
           <i class="fa fa-bars"></i>
         </button>
 
-        <a href="index.php" class="logoArea">
+        <a href="../index.php" class="logoArea">
           <img
             src="../images/kisspng_gray_wolf_logo_mascot_clip_art_wolf_5ab4467dd78141_1.png"
             alt="Logo"
@@ -121,7 +99,7 @@ include_once '../php/conexao.php';
 
         <div class="navMenu">
           <ul class="navItems">
-            <li>
+          <li>
               <div id="produtosListaDropDown">
                 <a> <span>Destaques</span> <i class="fa fa-caret-down"></i> </a>
                 <ul id="produtosListaDropDownUl">
@@ -129,35 +107,39 @@ include_once '../php/conexao.php';
                   <li id="maisVendidosBtn">Mais vendidos</li>
                 </ul>
               </div>
-              <li>
-              <a href="../index.php"> Home </a>
             </li>
-            </li>
-
-            <li><a href="../products/produtos.php">Produtos</a></li>
+            
 
             <li>
-              <a href="../contato/contato.php"> Contato </a>
+                <a href="../index.php">Home</a>
             </li>
-         
+            
+            <li>
+                <a href="../contato/contato.php">Contato</a>
+            </li>
+
+            <li>
+                <a href="../sobre/sobre.php">Sobre</a>
+            </li>
           </ul>
 
           <div class="navItems2">
             <button class="navBtn">
             <?php
-                      if((!isset($_SESSION['id'])) AND (!isset($_SESSION['nome']))){
+                        if((!isset($_SESSION['id'])) AND (!isset($_SESSION['nome']))){
                 
                   
     
-                        echo  '<a href="../user/login.php"> <i class="fa fa-user"></i></a></span>';                      }
-                       else {
-          
-                        echo  '<span class="menuItem"><a href="../user/dashboard.php">Configurações</a></span>';
-          
-                        echo    '<a href="../user/sair.php">SAIR</a>';
-                      
-                    }
-                ?>
+                          echo  '<a href="../user/login.php"> <i class="fa fa-user"></i><span class="nav2ItemNome">Login</span></a>';
+                        }
+                         else {
+            
+                          echo  '<span class="menuItem"><a href="../user/dashboard.php">Configurações</a></span>';
+            
+                          echo    '<a href="../user/sair.php">SAIR</a>';
+                        
+                      }
+            ?>
             </button>
             <button id="abrirCarrinhoBtn" class="navBtn" onclick="">
               <i class="fa fa-cart-shopping"></i>
@@ -168,22 +150,10 @@ include_once '../php/conexao.php';
       </div>
     </nav>
 
-    <div id="botao__carinho" class="botao__carinho">
-      <h3>Carrinho <i class="fa fa-cart-shopping"></i></h3>
-      <button
-        type="button"
-        class="limparCarrinhoBtn"
-        onclick=" localStorage.clear(); location.reload();"
-      >
-        Limpar
-      </button>
-      <button
-        type="button"
-        class="limparCarrinhoBtn"
-        onclick=" location.reload();"
-      >
-        Atualizar
-      </button>
+   
+
+    
+ 
       <div>Total R$: <span id="total"></span> </div>            
       <div id="botao__carinho___tabela">
       <div id="itens"> </div>
@@ -198,50 +168,10 @@ include_once '../php/conexao.php';
 
       <button id="fecharCarrinhoBtn"><i class="fa fa-close"></i></button>
     </div>
+</body>
+ <!-- Footer -->
 
-          
-    </header>
-
-    <div class="quemSomos">
-      <h1 class="titulo">Quem somos?</h1>
-    </div>
-
-    <div class="textoContainer">
-      <h2>
-        Wolf fit é uma empresa focada na venda de suplementos, equipamentos e
-        acessórios.
-      </h2>
-
-      <p>
-        Nossos produtos são vendidos principalmente por
-        <strong>e-commerce</strong>, e são voltados ao público de academia, que
-        leva sua <strong>saúde</strong> e <strong>boa forma física</strong> como
-        estilo de vida.
-      </p>
-
-      <h3>Missão</h3>
-
-      <p>
-        Lutar <strong>contra o sedentarismo</strong>, e elevar o nível do treino
-        das pessoas com nossos suplementos e equipamentos de
-        <strong>alta qualidade</strong> para que seja atingindo o melhor
-        desempenho possível.
-      </p>
-
-      <h3>Visão</h3>
-
-      <p>
-        Consolidar nossos produtos e serviços, em uma posição de
-        <strong>líder de mercado</strong>. Tendo nossa marca reconhecida em todo
-        território nacional como referência de
-        <strong>maior qualidade</strong> e <strong>conforto</strong> que nossos
-        produtos oferecem.
-      </p>
-    </div>
-
-  <!-- Footer -->
-    
-  <footer>
+ <footer>
       <div class="cadastroEmail">
         <p>
           <i class="fas fa-envelope"></i> RECEBA OFERTAS E NOVIDADES POR E-MAIL:
@@ -276,8 +206,6 @@ include_once '../php/conexao.php';
 </body>
 
 
-<script type="text/javascript" src="../script/carrinho.js"> </script>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/nav.css">
-<link rel="stylesheet" href="../css/footer.css">
+<script type="text/javascript" src="produtos.js"> 
+</script>
 </html>

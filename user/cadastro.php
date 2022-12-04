@@ -340,11 +340,7 @@ if(isset($_SESSION['msg'])){
                      
                                 echo  '<a href="login.php"> <i class="fa fa-user"></i></a></span>';
                               
-                              } else {
-                                echo  '<span class="menuItem"><a href="dashboard.php">Configurações</a></span>';
-                  
-    
-                          echo  '<a href="../user/login.php"> <i class="fa fa-user"></i></a></span>';
+                          
                         }
                          else {
             
@@ -364,6 +360,36 @@ if(isset($_SESSION['msg'])){
       </div>
     </nav>
 
+    <div id="botao__carinho" class="botao__carinho">
+      <h3>Carrinho <i class="fa fa-cart-shopping"></i></h3>
+      <button
+        type="button"
+        class="limparCarrinhoBtn"
+        onclick=" localStorage.clear(); location.reload();"
+      >
+        Limpar
+      </button>
+      <button
+        type="button"
+        class="limparCarrinhoBtn"
+        onclick=" location.reload();"
+      >
+        Atualizar
+      </button>
+      <div>Total R$: <span id="total"></span> </div>            
+      <div id="botao__carinho___tabela">
+      <div id="itens"> </div>
+      <div class="total2">Total R$: <span id="total2"></span> 
+      <input type="hidden" value="" id="total_full"></input></div>
+        
+      </div>
+
+      
+
+      
+
+      <button id="fecharCarrinhoBtn"><i class="fa fa-close"></i></button>
+    </div>
 
 
 
@@ -437,51 +463,21 @@ if(isset($_SESSION['msg'])){
       </div>
 
       <div class="creditos">
-        <div class="criadores">
-          <h5>Criadores</h5>
-          <a href="https://github.com/Alcantara-Diego" target="_blank"
-            >Diego Alcântara</a
-          >
-          <a href="https://github.com/jhoneshark" target="_blank">Jhoneshark</a>
-          <a href="https://github.com/Claitonok" target="_blank"
-            >Claiton Silva</a
-          >
-          <a href="https://github.com/Digao46" target="_blank">Diogo Melo</a>
-        </div>
-
+      
         <div class="extras">
           <h5>Extras</h5>
           <a href="https://www.instagram.com/wolffit848/" target="_blank"
             >Instagram <i class="fa-brands fa-instagram"></i
           ></a>
-          <a href="/components/sobre/sobre.html"> Sobre Nós</a>
-          <a href="/components/contato/contato.html">Fale Conosco</a>
+          <a href="../sobre/sobre.php"> Sobre Nós</a>
+          <a href="../contato/contato.php">Fale Conosco</a>
         </div>
 
-        <div class="imagens">
-          <h5>Imagens</h5>
-
-          <a
-            href="https://unsplash.com/@sxoxm?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-            >Sven Mieke</a
-          >
-
-          <a
-            href="https://www.freepik.com/free-psd/protein-powder-container-mockup_17197932.htm#query=whey&position=5&from_view=search&track=sph"
-            target="_blank"
-            >xvector</a
-          >
-
-          <a
-            href="https://unsplash.com/@visualsbyroyalz?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-            target="_blank"
-            >Anastase Maragos</a
-          >
+                    
         </div>
       </div>
       <div>Wolf-Fit suplementos LTDA©2022</div>
     </footer>
-
 
     <script src="../script/hamburguer.js"></script>
 

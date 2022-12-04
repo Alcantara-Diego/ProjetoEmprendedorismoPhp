@@ -26,7 +26,7 @@ $total_produtos = mysqli_num_rows($result_produto_sTotal);
 
 //Seta a quantidade de produtos por pagina
 
-$quantidade_pg = 16;
+$quantidade_pg = 15;
 
 
 //calcular o número de pagina necessárias para apresentar os produtos
@@ -39,12 +39,24 @@ $num_pagina = ceil($total_produtos/$quantidade_pg);
 $incio = ($quantidade_pg*$pagina)-$quantidade_pg;
 
 //Selecionar os produtos a serem apresentado na página
-$result_produtos_querys = "SELECT * FROM produtos ORDER BY id_produtos  DESC limit $incio, $quantidade_pg ";
+$result_produtos_querys = "SELECT * FROM produtos
+  ORDER BY preco_promo IS  NULL, preco_promo ASC
+
+limit $incio, $quantidade_pg ";
 $result_produto_sTotals = mysqli_query($connect, $result_produtos_querys);
 $total_produtos = mysqli_num_rows($result_produto_sTotal);
 
+if(!empty($dados["Preco_promo"])){
+  $result_produtos_querys = "SELECT * FROM produtos WHERE preco_promo is not null ORDER BY preco_promo ASC limit $incio, $quantidade_pg ";
+  $result_produto_sTotals = mysqli_query($connect, $result_produtos_querys);
+  $total_produtos = mysqli_num_rows($result_produto_sTotal);
+}
 if(!empty($dados["Preco_baixo"])){
-  $result_produtos_querys = "SELECT * FROM produtos ORDER BY preco_produtos ASC limit $incio, $quantidade_pg ";
+  $result_produtos_querys = "SELECT * FROM produtos
+  ORDER BY preco_promo IS  NULL, preco_promo,preco_produtos ASC
+
+  
+  limit $incio, $quantidade_pg ";
   $result_produto_sTotals = mysqli_query($connect, $result_produtos_querys);
   $total_produtos = mysqli_num_rows($result_produto_sTotal);
 }
@@ -129,7 +141,7 @@ if(!empty($dados["ordemAfabetica_desc"])){
       crossorigin="anonymous"
     />
 
-    <title>WOLF FIT</title>
+    <title>Produtos</title>
 
 
 
@@ -202,7 +214,7 @@ if(!empty($dados["ordemAfabetica_desc"])){
                 
                   
     
-                          echo  '<a href="user/login.php"> <i class="fa fa-user"></i><span class="nav2ItemNome">Login</span></a>';
+                          echo  '<a href="../user/login.php"> <i class="fa fa-user"></i><span class="nav2ItemNome">Login</span></a>';
                         }
                          else {
             
@@ -256,21 +268,19 @@ if(!empty($dados["ordemAfabetica_desc"])){
 
 
 
-    <div class="cabecalho">
-      <img class="cabecalhoImg" src="../images/background/suplementosBg.jpg" alt="">
-      <h1 class="titulo">Suplementos</h1>
-    </div>
-
+  
 
     <!-- Produtos -->
 
     <div class="container theme-showcase" role="main">
             <div class= "Vitrine">
           <form  id="formFiltro" method="POST" action=""> 
-            <input name="Preco_baixo" value="Preco_baixo" type="submit">
-            <input name="Preco_alto" value="Preco_alto" type="submit">
-            <input name="ordemAfabetica_desc" value="ordemAfabetica_desc" type="submit">
-            <input name="ordemAfabetica_asc" value="ordemAfabetica_asc" type="submit">
+            <input name="Preco_promo" value="Promoções" type="submit">
+            <input name="Preco_baixo" value="Preço - Baixo" type="submit">
+            <input name="Preco_alto" value="Praço - Alto" type="submit">
+            <input name="ordemAfabetica_asc" value="Ordenar A - Z " type="submit">
+            <input name="ordemAfabetica_desc" value="Ordenar Z - A " type="submit">
+         
           </form>
         	<div class="row">
          
@@ -283,13 +293,16 @@ if(!empty($dados["ordemAfabetica_desc"])){
                                 $id_p = $rows_produtos['id_produtos'];
                                 $nome_p = $rows_produtos['nome_produtos'];
                                 $preco_p = $rows_produtos['preco_produtos'];
+                                $promo_p = $rows_produtos['preco_promo'];
                                 $img_p = $rows_produtos['img_produtos'];
+
 
                                 $array_produto = [ $id_p, $nome_p,  $preco_p ];
 
                         echo '<div class="Div_produtos_vitrine" id="Produto_id_'. $id_p.'">';
                         echo '<div class="div_produto">
-                        <img class= Imagem_produtos_exibidos src="'. $rows_produtos['img_produtos'].'" alt="whey__wolffit">';
+                        <a href="detalhes.php?product_id='.$id_p.'">
+                        <img class= Imagem_produtos_exibidos src="'. $rows_produtos['img_produtos'].'" alt="whey__wolffit"></a>';
 
 
                         echo '
@@ -303,28 +316,44 @@ if(!empty($dados["ordemAfabetica_desc"])){
                               '
                               <div class="produtoInfo">
                               <p class="Id_produtos_id" id="i_id_'. $id_p.'">ID:' . $rows_produtos['id_produtos'].' </p>
-                              <p class="Nome_produtos_id" id="N_id_'. $id_p.'"> '. $rows_produtos['nome_produtos']. '</p>
-                              <p class="Preco_produtos_id" id="P_id_'. $id_p.'">R$ ' . number_format($rows_produtos['preco_produtos'], 2, ",",'.'). '</p>
-                              <p class="Descricao_produtos_id" id="D_id_'. $id_p.'">Descrição: ' . $rows_produtos['descricao_produtos'].' </p>
+                              <p class="Nome_produtos_id" id="N_id_'. $id_p.'"> '. $rows_produtos['nome_produtos']. '</p>';
+
+                              if(  $promo_p != 0  && $promo_p != null ){
+                                echo '<p class="Preco_produtos_id Promo" id="P_id_'. $id_p.'">R$ ' . number_format($rows_produtos['preco_produtos'], 2, ",",'.'). '</p>';
+                                echo '<p class="Preco_promo_id" id="P_promo_'. $id_p.'"> RS '.number_format($rows_produtos['preco_promo'], 2, ",",".").'</p>';
+                              }
+                              else{
+                              echo '<p class="Preco_produtos_id" id="P_id_'. $id_p.'">R$ ' . number_format($rows_produtos['preco_produtos'], 2, ",",'.'). '</p>';
+                              }
+                              echo '<p class="Descricao_produtos_id" id="D_id_'. $id_p.'">Descrição: ' . $rows_produtos['descricao_produtos'].' </p>
                               </div>
 
                               <button 
                               class="butonn_produtos_id" id="B_id_'. $id_p.'"
-                              onclick="adicionarProduto(`'.$id_p.'`,`'. $nome_p.'`,`'.$preco_p.'`,`'.$img_p.'`)">COMPRAR</button>';
-
-                                    
+                              onclick="adicionarProduto(`'.$id_p.'`,`'. $nome_p.'`,';
+                              if( $promo_p != 0  && $promo_p != null){
+                                echo '`'.$promo_p.'`,`'.$img_p.'`)">COMPRAR</button>';
+                              }
+                              else{
+                                echo '`'.$preco_p.'`,`'.$img_p.'`)">COMPRAR</button>';
+                              }
+                        
+                                                      
                                //echo "<pre>";
                               // echo json_encode( $array_produto );
                                //echo "</pre>";
-                               echo '</div>';
+                               echo ' </div>';
                             
                          echo '</div>';       
                         ?>
+                     
+
                               
                             
 						</div>
 					</div>
-				<?php } ?>
+				<?php } 
+        ?>
         <div class="adicionou">Produto Adicionado 
           <i class="fas fa-cart-fill"></i>
           <i class="fas fa-check-circle-fill"></i>
@@ -372,6 +401,7 @@ if(!empty($dados["ordemAfabetica_desc"])){
 
     
     <!-- Footer -->
+
     <footer>
       <div class="cadastroEmail">
         <p>
@@ -385,49 +415,21 @@ if(!empty($dados["ordemAfabetica_desc"])){
       </div>
 
       <div class="creditos">
-        <div class="criadores">
-          <h5>Criadores</h5>
-          <a href="https://github.com/Alcantara-Diego" target="_blank"
-            >Diego Alcântara</a
-          >
-          <a href="https://github.com/jhoneshark" target="_blank">Jhoneshark</a>
-          <a href="https://github.com/Claitonok" target="_blank"
-            >Claiton Silva</a
-          >
-          <a href="https://github.com/Digao46" target="_blank">Diogo Melo</a>
-        </div>
-
+      
         <div class="extras">
           <h5>Extras</h5>
           <a href="https://www.instagram.com/wolffit848/" target="_blank"
             >Instagram <i class="fa-brands fa-instagram"></i
           ></a>
-          <a href="/components/sobre/sobre.html"> Sobre Nós</a>
-          <a href="/components/contato/contato.html">Fale Conosco</a>
+          <a href="../sobre/sobre.php"> Sobre Nós</a>
+          <a href="../contato/contato.php">Fale Conosco</a>
         </div>
 
-        <div class="imagens">
-          <h5>Imagens</h5>
-
-          <a
-            href="https://unsplash.com/@sxoxm?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-            >Sven Mieke</a
-          >
-
-          <a
-            href="https://www.freepik.com/free-psd/protein-powder-container-mockup_17197932.htm#query=whey&position=5&from_view=search&track=sph"
-            target="_blank"
-            >xvector</a
-          >
-
-          <a
-            href="https://unsplash.com/@visualsbyroyalz?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-            target="_blank"
-            >Anastase Maragos</a
-          >
+                    
         </div>
       </div>
       <div>Wolf-Fit suplementos LTDA©2022</div>
+    
     </footer>
 
 

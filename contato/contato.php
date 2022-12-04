@@ -28,9 +28,9 @@ include_once '../php/conexao.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../css/nav.css">
+   
     <link rel="stylesheet" href="contato.css">
-    <link rel="stylesheet" href="../css/footer.css">
+    
 
 	<link
       href="https://fonts.googleapis.com/css?family=Inter&display=swap"
@@ -118,7 +118,7 @@ include_once '../php/conexao.php';
 
         <a href="index.php" class="logoArea">
           <img
-            src="./images/kisspng_gray_wolf_logo_mascot_clip_art_wolf_5ab4467dd78141_1.png"
+            src="../images/kisspng_gray_wolf_logo_mascot_clip_art_wolf_5ab4467dd78141_1.png"
             alt="Logo"
          
           />
@@ -135,15 +135,14 @@ include_once '../php/conexao.php';
                   <li id="maisVendidosBtn">Mais vendidos</li>
                 </ul>
               </div>
+              <li>
+              <a href="../index.php"> Home </a>
+            </li>
+
             </li>
 
             <li><a href="../products/produtos.php">Produtos</a></li>
-
-            <li>
-              <a href="contato.php"> Contato </a>
-            </li>
-
-            <li>
+                <li>
               <a href="../sobre/sobre.php"> Sobre </a>
             </li>
           </ul>
@@ -176,6 +175,38 @@ include_once '../php/conexao.php';
         </div>
       </div>
     </nav>
+
+    <div id="botao__carinho" class="botao__carinho">
+      <h3>Carrinho <i class="fa fa-cart-shopping"></i></h3>
+      <button
+        type="button"
+        class="limparCarrinhoBtn"
+        onclick=" localStorage.clear(); location.reload();"
+      >
+        Limpar
+      </button>
+      <button
+        type="button"
+        class="limparCarrinhoBtn"
+        onclick=" location.reload();"
+      >
+        Atualizar
+      </button>
+      <div>Total R$: <span id="total"></span> </div>            
+      <div id="botao__carinho___tabela">
+      <div id="itens"> </div>
+      <div class="total2">Total R$: <span id="total2"></span> 
+      <input type="hidden" value="" id="total_full"></input></div>
+        
+      </div>
+
+      
+
+      
+
+      <button id="fecharCarrinhoBtn"><i class="fa fa-close"></i></button>
+    </div>
+
             
   </header>
 
@@ -288,6 +319,7 @@ include_once '../php/conexao.php';
 
   
   <!-- Footer -->
+    
   <footer>
       <div class="cadastroEmail">
         <p>
@@ -301,18 +333,7 @@ include_once '../php/conexao.php';
       </div>
 
       <div class="creditos">
-        <div class="criadores">
-          <h5>Criadores</h5>
-          <a href="https://github.com/Alcantara-Diego" target="_blank"
-            >Diego Alcântara</a
-          >
-          <a href="https://github.com/jhoneshark" target="_blank">Jhoneshark</a>
-          <a href="https://github.com/Claitonok" target="_blank"
-            >Claiton Silva</a
-          >
-          <a href="https://github.com/Digao46" target="_blank">Diogo Melo</a>
-        </div>
-
+      
         <div class="extras">
           <h5>Extras</h5>
           <a href="https://www.instagram.com/wolffit848/" target="_blank"
@@ -322,33 +343,20 @@ include_once '../php/conexao.php';
           <a href="../contato/contato.php">Fale Conosco</a>
         </div>
 
-        <div class="imagens">
-          <h5>Imagens</h5>
-
-          <a
-            href="https://unsplash.com/@sxoxm?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-            >Sven Mieke</a
-          >
-
-          <a
-            href="https://www.freepik.com/free-psd/protein-powder-container-mockup_17197932.htm#query=whey&position=5&from_view=search&track=sph"
-            target="_blank"
-            >xvector</a
-          >
-
-          <a
-            href="https://unsplash.com/@visualsbyroyalz?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-            target="_blank"
-            >Anastase Maragos</a
-          >
+                    
         </div>
       </div>
       <div>Wolf-Fit suplementos LTDA©2022</div>
+    
     </footer>
+
 
     <script src="../script/hamburguer.js"></script>
 </body>
 
-<script src="../../JS/carrinho.js "></script>
 
+<script type="text/javascript" src="../script/carrinho.js"> </script>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/footer.css">
 </html>

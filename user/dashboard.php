@@ -30,115 +30,6 @@ if((!isset($_SESSION['id'])) AND (!isset($_SESSION['nome']))){
 
 ?>
 
-<?php
-
-
-
-$dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
-
-if(!empty($dados["CadastrarEndereco"])){
-  
-    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
-
-
-    $_SESSION['id']; 
-
-
-
-    echo "<pre>";
-    var_dump($dados);
-    echo "</pre>";
-
-
-    $query_endereco =   "INSERT INTO enderecos (nome_endereco , cep, logradouro, complemento, usuario_id) 
-                        VALUES (:nome_endereco , :cep, :logradouro, :complemento, :usuario_id)";
-    $cad_endereco = $conn->prepare($query_endereco);
-
-    $cad_endereco -> bindParam(':nome_endereco', $dados['nome_endereco']);
-    $cad_endereco -> bindParam(':cep', $dados['cep']);
-    $cad_endereco -> bindParam(':logradouro', $dados['logradouro']);
-    $cad_endereco -> bindParam(':complemento',  $dados['complemento']);
-    $cad_endereco -> bindParam(':usuario_id',  $_SESSION['id']);
-
-
-    $cad_endereco -> execute();
-
-    if($cad_endereco->rowCount()){
-        
-        echo "<p> Endereço cadastrado com sucesso </p>";
-
-        header("Location: dashboard.php");
-
-    }
-    else{
-
-        echo "<p> Endereço não cadastrado </p>";
-
-    }
-
-   //  $query_endereco= "INSERT INTO enderecos (nome_endereco, cep, logradouro , complemento, usuario_id ) ";
-     
-
-}
-
-?>
-
-<?php
-  
-    function webClient ($url)
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $data = curl_exec($ch);
-        curl_close($ch);
-        return $data;
-    }
-
-    if(empty($dados["cep"]))
-    {
-
-
-    $__cep = "";
-
-
-    }
-    else {
-    $__cep = $dados["cep"];
-    $url = sprintf('http://viacep.com.br/ws/%s/json/ ', $__cep);
-    $result = json_decode(webClient($url));
-    
-    if( $result){
-    var_dump($result->logradouro);
-   
-
-    
-    
-        $__logradouro = $result->logradouro;
-        $__bairro = $result->bairro;
-        $__localidade = $result->localidade;
-        $__uf = $result->uf;
-    
-
-
-  
-    //echo $logradouro;
-    //echo "<pre>";
-    //var_dump($result);
-    //echo "</pre>";
-    }
-    else {
-
-    }
-    }
-
-
-
-?>
 
 
 
@@ -286,6 +177,36 @@ if(!empty($dados["CadastrarEndereco"])){
         </div>
       </div>
     </nav>
+    <div id="botao__carinho" class="botao__carinho">
+      <h3>Carrinho <i class="fa fa-cart-shopping"></i></h3>
+      <button
+        type="button"
+        class="limparCarrinhoBtn"
+        onclick=" localStorage.clear(); location.reload();"
+      >
+        Limpar
+      </button>
+      <button
+        type="button"
+        class="limparCarrinhoBtn"
+        onclick=" location.reload();"
+      >
+        Atualizar
+      </button>
+      <div>Total R$: <span id="total"></span> </div>            
+      <div id="botao__carinho___tabela">
+      <div id="itens"> </div>
+      <div class="total2">Total R$: <span id="total2"></span> 
+      <input type="hidden" value="" id="total_full"></input></div>
+        
+      </div>
+
+      
+
+      
+
+      <button id="fecharCarrinhoBtn"><i class="fa fa-close"></i></button>
+    </div>
 
 
 
@@ -322,16 +243,14 @@ if(!empty($dados["CadastrarEndereco"])){
                         echo "usuario: $usuario <br>"; 
                         echo '<div class="enderecos">';
 
-                        echo '<form action="" method="post">';
+            
 
-                        echo ' <input type="submit" name="alterarSenha" id="btnAlterarSenha" value="Alterar senha" />';
+                        echo ' <a href=" trocarsenha.php">
+                                     <button>Alterar Senha</button>
+                               </a>
+                               <br>';
 
-                        if(!empty($dados['alterarSenha'])){
-                            header("Location: trocarsenha.php");
-                        }
-
-                        echo '</form>';
-
+                    
 
 
 
@@ -426,32 +345,59 @@ if(!empty($dados["CadastrarEndereco"])){
 
 
 
-<form method="POST" action="">
-<input class="input_AdicionarEndereco" type="submit" value="Adicionar Endereco" name="AdicionarEndereco">
-<BR>
-<BR>
-<?php
 
-if(!empty($dados["AdicionarEndereco"])){
-  
-    header("Location: adicionarEndereco.php");
+<a href="adicionarEndereco.php">
+      <button>Adicionar Endereco</button>
+</a>
 
-}
-?>
-</section>
+
 </div>
+</section>
                     
                     
- </form>
+
 
 
 
     <!-- Footer -->
+    
     <footer>
-        Wolf-Fit suplementos LTDA©2022
+      <div class="cadastroEmail">
+        <p>
+          <i class="fas fa-envelope"></i> RECEBA OFERTAS E NOVIDADES POR E-MAIL:
+        </p>
+
+        <form>
+          <input type="email" placeholder="E-mail" />
+          <button class="cadastrarBtn">Cadastrar</button>
+        </form>
+      </div>
+
+      <div class="creditos">
+      
+        <div class="extras">
+          <h5>Extras</h5>
+          <a href="https://www.instagram.com/wolffit848/" target="_blank"
+            >Instagram <i class="fa-brands fa-instagram"></i
+          ></a>
+          <a href="../sobre/sobre.php"> Sobre Nós</a>
+          <a href="../contato/contato.php">Fale Conosco</a>
+        </div>
+
+                    
+        </div>
+      </div>
+      <div>Wolf-Fit suplementos LTDA©2022</div>
+    
     </footer>
 
 
+    <script src="../script/hamburguer.js"></script>
 </body>
 
-</html> 
+
+<script type="text/javascript" src="../script/carrinho.js"> </script>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/footer.css">
+</html>
